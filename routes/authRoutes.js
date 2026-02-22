@@ -9,5 +9,7 @@ router.get("/profile", protect, profile);
 router.get("/check-admin", protect, adminOnly, (req, res) => {
   res.json({ message: "Admin verified" });
 });
-
+router.post("/logout", (req, res) => {
+    res.json({ message: "Logout successful" });
+});
 module.exports = router;
