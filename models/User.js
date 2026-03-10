@@ -8,7 +8,21 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["user", "admin", "seller"],
     default: "user"
-  }
+  },
+  bio: {
+    type: String,
+    default: "New User"
+  },
+  progress: {
+    type: Number,
+    default: 0
+  },
+  courses: [
+    {
+      name: String,
+      completed: { type: Boolean, default: false }
+    }
+  ]
 });
 
 module.exports = mongoose.model("User", userSchema);

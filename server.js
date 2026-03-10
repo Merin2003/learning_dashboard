@@ -21,6 +21,10 @@ app.get("/", (req, res) => {
 // Auth Routes
 app.use("/api/auth", authRoutes);
 
+// User Routes
+const userRoutes = require("./routes/userRoutes");
+app.use("/api/users", userRoutes);
+
 // Protected Dashboard Route
 app.get("/api/dashboard", protect, (req, res) => {
   res.json({ message: "Welcome to Dashboard", user: req.user });
