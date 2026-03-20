@@ -50,14 +50,18 @@ exports.getCourses = async (req, res) => {
 };
 
 exports.markCourseComplete = async (req, res) => {
-  const { courseName } = req.params;
+  const { courseName: rawCourseName } = req.params;
+  const courseName = String(rawCourseName || "").trim();
+  const normalizedCourseName = courseName.toLowerCase();
 
   const user = await User.findById(req.user.id);
   if (!user) return res.status(404).json({ message: "User not found" });
 
   user.courses = ensureCoursesInitialized(user);
 
-  const course = user.courses.find((c) => c.name === courseName);
+  const course = user.courses.find(
+    (c) => String(c.name || "").trim().toLowerCase() === normalizedCourseName
+  );
   if (!course) {
     // If someone calls with an unexpected name, don't break the user doc.
     return res.status(400).json({ message: "Unknown course" });
