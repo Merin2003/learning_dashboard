@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const userRoutes = require("./routes/userRoutes");
 const cors = require("cors");
 const { protect } = require("./middleware/authMiddleware");
 
@@ -20,6 +21,9 @@ app.get("/", (req, res) => {
 
 // Auth Routes
 app.use("/api/auth", authRoutes);
+
+// User Routes (frontend expects `/api/users/*`).
+app.use("/api/users", userRoutes);
 
 // Protected Dashboard Route
 app.get("/api/dashboard", protect, (req, res) => {
